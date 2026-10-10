@@ -1,6 +1,6 @@
 # CodexDev 🚀
 
-[![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/MohamedCHAMI/CodexDev/releases/download/v1.0.0/CodexDev-macOS.zip)
+[![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/MohamedCHAMI/CodexDev/releases/download/v1.0.0/CodexDev.dmg)
 
 **CodexDev** is a beautiful, native macOS application that seamlessly bridges the gap between **ChatGPT** and your local Mac file system. It acts as a secure, one-click manager for your local Model Context Protocol (MCP) server.
 
