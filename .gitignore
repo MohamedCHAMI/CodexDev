@@ -1,0 +1,6 @@
+.build/
+CodexDev.app/
+CodexDev_test*
+.DS_Store
+*.xcodeproj
+xcuserdata
