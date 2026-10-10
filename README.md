@@ -1,5 +1,7 @@
 # CodexDev 🚀
 
+[![Download for macOS](https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/MohamedCHAMI/CodexDev/releases/download/v1.0.0/CodexDev-macOS.zip)
+
 **CodexDev** is a beautiful, native macOS application that seamlessly bridges the gap between **ChatGPT** and your local Mac file system. It acts as a secure, one-click manager for your local Model Context Protocol (MCP) server.
 
 By running a local Node.js server and integrating with Cloudflare Tunnels natively, CodexDev allows ChatGPT to read, write, and manage your local codebase securely—acting as your ultimate AI co-developer without ever compromising your computer's security.
