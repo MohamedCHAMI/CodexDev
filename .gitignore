@@ -4,3 +4,5 @@ CodexDev_test*
 .DS_Store
 *.xcodeproj
 xcuserdata
+*.dmg
+*.zip

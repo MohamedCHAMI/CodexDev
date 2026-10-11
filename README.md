@@ -4,50 +4,111 @@
   <img src="https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83" alt="Download on the Mac App Store" style="height: 60px;">
 </a>
 
-**CodexDev** is a beautiful, native macOS application that seamlessly bridges the gap between **ChatGPT** and your local Mac file system. It acts as a secure, one-click manager for your local Model Context Protocol (MCP) server.
+**CodexDev** is a native macOS application that seamlessly bridges **ChatGPT** with your local Mac file system. It acts as a secure, one-click manager for your local Model Context Protocol (MCP) server.
 
-By running a local Node.js server and integrating with Cloudflare Tunnels natively, CodexDev allows ChatGPT to read, write, and manage your local codebase securely—acting as your ultimate AI co-developer without ever compromising your computer's security.
+By running a local Node.js server and integrating with Cloudflare Tunnels natively, CodexDev empowers ChatGPT to read, write, and manage your local codebase securely—giving you a true AI co-developer experience while keeping your computer completely protected.
 
 ---
 
 ## 🌟 Why CodexDev?
 
-Setting up a local MCP server for ChatGPT usually requires leaving terminal windows open, configuring router port-forwarding, dealing with firewall rules, and handling complex environment variables.
+Setting up a local MCP server for ChatGPT typically requires keeping terminal windows open, configuring router port-forwarding, adjusting firewall rules, and juggling complex environment variables.
 
-**CodexDev solves all of this with a beautiful Apple-native UI:**
-- 🔌 **Zero-Config Cloudflare Tunnels:** Get an instant public HTTPS URL for your local code. No router configuration or firewall port-forwarding required.
-- 🛡️ **Built-in Security (The Bouncer):** Generates and manages a secure API Auth Token. ChatGPT must use this token to access your files, keeping hackers out instantly.
-- 🍏 **Native macOS Experience:** Lives in your menu bar. Start, stop, and configure your local server with beautiful native preference windows and interactive toast notifications.
-- 🤖 **Smart Dependency Checking:** Automatically detects if you are missing Node.js or Cloudflared, and provides exact one-click copyable terminal commands to install them via Homebrew.
-- 🔒 **Local-Only Mode:** Want to work entirely offline? Just clear the Tunnel Name and the app securely runs exclusively on your local network.
-
-## 🛠️ How It Works
-
-CodexDev acts as the orchestrator for three main components:
-
-1. **🧠 ChatGPT (The Brain)**: Sends a request over the internet like *"Read index.js"*.
-2. **🌉 Cloudflare Tunnel (The Pipe)**: A secure, invisible tunnel that catches ChatGPT's request and blindly passes it down to your local Mac. It DOES NOT touch your files.
-3. **🤖 Node.js Server (The Hands)**: This is the local server running inside CodexDev. It is the ONLY thing that actually reads and writes to your Mac's file system using local commands.
-
-## 🚀 Getting Started
-
-1. Download or clone this repository.
-2. Compile the app using Swift (`swift build -c release`).
-3. Open **CodexDev.app** and click the settings gear ⚙️ to open the Configuration window.
-4. Set your **Project Root** (the folder ChatGPT is allowed to see).
-5. Generate an **MCP Auth Token** and paste it into ChatGPT's Custom Action authentication settings.
-6. Provide your Cloudflare Tunnel Name (or leave blank for Local Mode).
-7. Click **Save & Restart Services** and you are ready to code with AI!
-
-## 📦 Dependencies
-- macOS 12.0+
-- **Node.js** (for running the local MCP server)
-- **Cloudflared** (for exposing the secure public tunnel)
-
-*CodexDev will automatically help you install these via Homebrew if you don't have them!*
-
-## 🛡️ Security Promise
-CodexDev was built with security as a priority. Your Cloudflare Tunnel simply acts as a blind delivery driver. Absolutely no file access is granted unless the request contains your exact, locally-generated MCP Auth Token.
+**CodexDev simplifies the entire workflow with a native macOS experience:**
+- 🔌 **Zero-Config Cloudflare Tunnels:** Instantly obtain a secure, public HTTPS endpoint for your local workspace without opening router ports or altering firewall configurations.
+- 🛡️ **Built-in Security (The Bouncer):** Generates and enforces a private Bearer Auth Token. Only authenticated requests from ChatGPT can reach your local files.
+- 🍏 **Native macOS Menu Bar App:** Operates silently in your menu bar. Start, stop, and configure your local MCP service with native SwiftUI preference panels and notifications.
+- 🤖 **Smart Dependency Checking:** Automatically verifies that Node.js and Cloudflared are installed, offering single-click Homebrew installation commands if anything is missing.
+- 🔒 **Local-Only Mode:** Work offline or on a trusted local network by clearing the Tunnel Name to restrict traffic to `localhost`.
 
 ---
-*Built to make AI Pair Programming on macOS magical.*
+
+## 🛠️ Architecture & How It Works
+
+CodexDev acts as the coordinator between ChatGPT, Cloudflare's secure network, and your local Mac:
+
+<p align="center">
+  <img src="docs/images/chatgpt-integration-flow.svg" alt="CodexDev ChatGPT Architecture Flow" width="740">
+</p>
+
+1. **🧠 ChatGPT (The Brain)**: Formulates tool requests (e.g., *"Inspect project structure"* or *"Edit app.js"*) and dispatches them over HTTPS with your secret Bearer token.
+2. **🌉 Cloudflare Tunnel (The Secure Conduit)**: Encrypted tunnel that routes ChatGPT's request directly down to your local Mac. It acts as a blind delivery channel without storing or inspecting your files.
+3. **🤖 Local Node.js MCP Server (The Hands)**: Runs locally on your Mac via CodexDev. It validates your MCP Auth Token, bounds operations strictly within your configured **Project Root**, and carries out file operations.
+
+---
+
+## 🔌 Integrating CodexDev with ChatGPT (Step-by-Step)
+
+Follow these steps to connect ChatGPT to your local development environment:
+
+### Step 1: Configure CodexDev on your Mac
+
+1. Launch **CodexDev.app** from your Applications folder or menu bar.
+2. Click the gear icon (**⚙️ Configuration**) to open the Settings window:
+
+<p align="center">
+  <img src="docs/images/configuration-window.svg" alt="CodexDev Configuration Window" width="680">
+</p>
+
+3. Configure the following fields:
+   - **MCP Auth Token**: Click to generate or enter a strong secret token (e.g. `••••••••••••`). Keep this confidential.
+   - **Project Root**: Click **Choose...** and select the parent folder where your codebases live (e.g., `/Users/developer/Projects`).
+   - **Downloads Path**: Choose a destination folder for files exported or created by AI sessions.
+   - **Public Base URL**: Enter your Cloudflare Tunnel domain (e.g. `https://codex.yourdomain.com`).
+   - **Tunnel Name**: Enter your Cloudflare tunnel identifier (e.g. `codex-local`).
+4. Click **Save & Restart Services**. The menu bar status will turn green (**Online**).
+
+---
+
+### Step 2: Add CodexDev as a Connector / MCP Server in ChatGPT
+
+1. In ChatGPT, open **Settings** → **Connectors** (or configure **Actions** in a Custom GPT).
+2. Click **Add New Connector / MCP Server**.
+3. Fill in your connection details:
+
+<p align="center">
+  <img src="docs/images/chatgpt-connector-setup.svg" alt="ChatGPT Connector Setup" width="680">
+</p>
+
+- **Connector Name**: `CodexDev (Local Mac)`
+- **MCP Server Endpoint URL**: `https://<your-subdomain>.yourdomain.com/mcp` *(replace with your public Cloudflare Tunnel URL)*
+- **Authentication**: Select **Bearer Token** and paste the **MCP Auth Token** from CodexDev.
+4. Click **Save & Connect**. ChatGPT will verify the endpoint and display the available local tools (`list_directory`, `read_file`, `write_file`, `execute_command`).
+
+---
+
+### Step 3: Start Pair Programming!
+
+Once connected, you can ask ChatGPT to interact directly with your workspace:
+
+```text
+Prompt: "Inspect the /chessspire folder, analyze its package.json, and list the active dependencies."
+```
+
+ChatGPT will invoke CodexDev's MCP server securely:
+1. Connects to `https://<your-domain>/mcp` using your Bearer token.
+2. CodexDev verifies the token and retrieves `/chessspire` from your allowed Project Root.
+3. Returns the content to ChatGPT to continue your coding workflow seamlessly.
+
+---
+
+## 📦 Requirements
+- **macOS 12.0+** (Apple Silicon or Intel)
+- **Node.js 18+** (`brew install node`)
+- **Cloudflared** (`brew install cloudflared`)
+
+*CodexDev automatically checks for these binaries on startup and provides copy-paste commands if they are missing.*
+
+---
+
+## 🛡️ Privacy & Security Guarantee
+
+- **Zero Third-Party Storage**: Your code is never sent to intermediate servers or stored in third-party databases.
+- **Strict Path Sandboxing**: The MCP server strictly forbids file operations outside your chosen **Project Root**.
+- **Bearer Token Guard**: All unauthenticated requests are immediately rejected with `401 Unauthorized`.
+- **Encrypted Ingress**: All communication travels through Cloudflare's end-to-end TLS encryption directly to your local machine.
+
+---
+
+## 📄 License
+MIT License. Created by [Mohamed Chami](https://github.com/MohamedCHAMI).
