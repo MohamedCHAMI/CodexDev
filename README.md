@@ -112,3 +112,21 @@ ChatGPT will invoke CodexDev's MCP server securely:
 
 ## 📄 License
 MIT License. Created by [Mohamed Chami](https://github.com/MohamedCHAMI).
+
+---
+
+## 🔁 Codex CLI bridge (use ChatGPT web from the terminal)
+
+CodexDev can also act as the model behind **Codex CLI**, using the ChatGPT session you are already signed in to in the app.
+The companion service is [`chatgpt-web-bridge`](https://github.com/MohamedCHAMI/chatgpt-web-bridge) (private).
+
+- On launch, CodexDev opens a **local control port** on `127.0.0.1:8791` (`ChatBridgeControl.swift`). It runs ChatGPT in hidden tabs that share the app's login, so your visible chat window is never touched.
+- The port exposes only fixed operations: open chat, send text, read state, show, and close. There is no arbitrary script execution, only `chatgpt.com` URLs are allowed, and every call needs the random token in `~/.chatgpt-web-bridge/app-token` (mode 600).
+- If `~/Desktop/Works/Apps/chatgpt-web-bridge` is installed, CodexDev starts the bridge automatically and stops it when you quit.
+- DOM selectors are read from `~/.chatgpt-web-bridge/selectors.json` on every call, so ChatGPT UI changes don't need a rebuild.
+
+```bash
+codex -p codexdev   # Codex CLI → bridge :8790 → CodexDev :8791 → ChatGPT web
+```
+
+> Automating the ChatGPT web UI is against OpenAI's terms of use. Your account may be limited or suspended. Use it at your own risk.

@@ -58,7 +58,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSToolbarDelegate {
     
     private var serverStatusButton: NSButton?
 
+    func applicationWillTerminate(_ aNotification: Notification) {
+        ChatBridgeControl.shared.stopBridgeServer()
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        ChatBridgeControl.shared.start()
+        ChatBridgeControl.shared.startBridgeServer(nodePath: PreferencesManager.shared.nodePath)
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem.button?.title = "⚪︎"
 
